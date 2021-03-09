@@ -1,0 +1,20 @@
+{
+  "name": "@resourcebundles/format",
+  "version": "0.1.0",
+  "description": "Package for parsing and serializing Resource Bundles format",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "type": "module",
+  "scripts": {
+    "build": "tsc --build",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "resourcebundles"
+  ],
+  "author": "uhyo <uhyo@uhy.ooo>",
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^4.2.3"
+  }
+}
