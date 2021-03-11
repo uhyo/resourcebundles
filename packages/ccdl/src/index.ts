@@ -1,6 +1,7 @@
 export { arrayHead } from "./syntax/arrayHead.js";
 export { byteString } from "./syntax/byteString.js";
 export { constBytes } from "./syntax/constBytes.js";
+export { group } from "./syntax/group.js";
 export { bytesCbor } from "./syntax/high-level/bytesCbor.js";
 export { map } from "./syntax/map.js";
 export { sequenceArray } from "./syntax/sequenceArray.js";
