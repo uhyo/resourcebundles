@@ -25,13 +25,21 @@ export function countTagAndAdditionalValue(
 }
 
 /**
+ * Count bytes to write given length of string as a byte string.
+ * @returns written bytes
+ */
+export function countByteStringOfLength(length: number): number {
+  // write length information with major tag
+  return countTagAndAdditionalValue(majorTags.byteString, length) + length;
+}
+
+/**
  * Count bytes to write given string as a byte string.
  * @returns written bytes
  */
 export function countByteString(str: string | Buffer): number {
   // write length information with major tag
-  const length = Buffer.byteLength(str, "utf8");
-  return countTagAndAdditionalValue(majorTags.byteString, length) + length;
+  return countByteStringOfLength(Buffer.byteLength(str, "utf8"));
 }
 
 /**
@@ -50,4 +58,24 @@ export function countByteStringMapObject<T>(
     result += elementCounter(element);
   }
   return result;
+}
+
+/**
+ * Count bytes to write header of array of given length.
+ */
+export function countArrayHeader(length: number): number {
+  return countTagAndAdditionalValue(majorTags.array, length);
+}
+
+/**
+ * Count bytes to write given array.
+ */
+export function countArray<T>(
+  arr: readonly T[],
+  elementCounter: (value: T) => number
+): number {
+  return arr.reduce(
+    (acc, elm) => acc + elementCounter(elm),
+    countArrayHeader(arr.length)
+  );
 }

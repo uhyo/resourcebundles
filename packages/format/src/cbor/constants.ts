@@ -4,6 +4,10 @@ export const majorTags = {
    */
   byteString: 2,
   /**
+   * Array
+   */
+  array: 4,
+  /**
    * Map
    */
   map: 5,
