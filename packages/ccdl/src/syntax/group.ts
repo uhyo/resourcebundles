@@ -1,17 +1,17 @@
-import { CCDLSyntax, InferDataFromSyntax } from "./internal/CCDLSyntax.js";
+import {
+  CCDLSyntax,
+  InferInputFromSyntax,
+  InferOutputFromSyntax,
+} from "./internal/CCDLSyntax.js";
 
 type GroupSyntax<Defs extends readonly CCDLSyntax<any>[]> = {
   defs: Defs;
 } & CCDLSyntax<
   {
-    [K in keyof Defs]: InferDataFromSyntax<Defs[K]> extends [infer O, infer I]
-      ? O
-      : unknown;
+    [K in keyof Defs]: InferOutputFromSyntax<Defs[K]>;
   },
   {
-    [K in keyof Defs]: InferDataFromSyntax<Defs[K]> extends [infer O, infer I]
-      ? I
-      : unknown;
+    [K in keyof Defs]: InferInputFromSyntax<Defs[K]>;
   }
 >;
 

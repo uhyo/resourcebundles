@@ -4,7 +4,11 @@ export { byteStringHead } from "./syntax/fragment/byteStringHead.js";
 export { constBytes } from "./syntax/fragment/constBytes.js";
 export { group } from "./syntax/group.js";
 export { bytesCbor } from "./syntax/high-level/bytesCbor.js";
-export type { CCDLSyntax } from "./syntax/internal/CCDLSyntax";
+export type {
+  CCDLSyntax,
+  InferInputFromSyntax,
+  InferOutputFromSyntax,
+} from "./syntax/internal/CCDLSyntax";
 export { map } from "./syntax/map.js";
 export { repeatArray } from "./syntax/repeatArray.js";
 export { sequenceArray } from "./syntax/sequenceArray.js";

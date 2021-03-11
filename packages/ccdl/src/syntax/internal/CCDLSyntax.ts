@@ -50,8 +50,14 @@ export type CCDLSyntaxMaybeNodata<
   ? NoDataCCDLSyntax<OutputDataType, InputDataType>
   : CCDLSyntax<OutputDataType, InputDataType>;
 
-export type InferDataFromSyntax<T> = T extends CCDLSyntax<infer O, infer I>
-  ? [O, I]
+export type InferOutputFromSyntax<T> = T extends CCDLSyntax<infer O, infer I>
+  ? O
   : T extends NoDataCCDLSyntax<infer O, infer I>
-  ? [O, I]
-  : [unknown, unknown];
+  ? O
+  : unknown;
+
+export type InferInputFromSyntax<T> = T extends CCDLSyntax<infer O, infer I>
+  ? I
+  : T extends NoDataCCDLSyntax<infer O, infer I>
+  ? I
+  : unknown;

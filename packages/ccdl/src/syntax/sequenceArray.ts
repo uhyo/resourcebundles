@@ -1,6 +1,10 @@
 import { assertMajorType } from "../error/assertion.js";
 import { CCDLSyntaxError } from "../error/CCDLSyntaxError.js";
-import { CCDLSyntax, InferDataFromSyntax } from "./internal/CCDLSyntax.js";
+import {
+  CCDLSyntax,
+  InferInputFromSyntax,
+  InferOutputFromSyntax,
+} from "./internal/CCDLSyntax.js";
 import { countHead, readHead, writeHead } from "./internal/head.js";
 import { majorTypes } from "./internal/MajorType.js";
 
@@ -8,14 +12,10 @@ type SequenceArray<Defs extends readonly CCDLSyntax<any>[]> = {
   defs: Defs;
 } & CCDLSyntax<
   {
-    [K in keyof Defs]: InferDataFromSyntax<Defs[K]> extends [infer O, infer I]
-      ? O
-      : unknown;
+    [K in keyof Defs]: InferOutputFromSyntax<Defs[K]>;
   },
   {
-    [K in keyof Defs]: InferDataFromSyntax<Defs[K]> extends [infer O, infer I]
-      ? I
-      : unknown;
+    [K in keyof Defs]: InferInputFromSyntax<Defs[K]>;
   }
 >;
 
