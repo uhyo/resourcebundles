@@ -7,7 +7,7 @@
   "type": "module",
   "scripts": {
     "build": "tsc --build",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "NODE_OPTIONS=--experimental-vm-modules jest"
   },
   "keywords": [
     "resourcebundles"
@@ -15,6 +15,15 @@
   "author": "uhyo <uhyo@uhy.ooo>",
   "license": "MIT",
   "devDependencies": {
+    "@babel/core": "^7.13.10",
+    "@babel/preset-env": "^7.13.10",
+    "@babel/preset-typescript": "^7.13.0",
+    "@types/jest": "^26.0.20",
+    "babel-jest": "^26.6.3",
+    "jest": "^27.0.0-next.4",
     "typescript": "^4.2.3"
+  },
+  "dependencies": {
+    "@types/node": "^14.14.33"
   }
 }
