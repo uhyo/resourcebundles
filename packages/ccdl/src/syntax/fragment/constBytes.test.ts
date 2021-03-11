@@ -1,8 +1,8 @@
 import {
   asyncBufferToStream,
   bufferToStream,
-} from "../utils/test/bufferToStream.js";
-import { writeToBuffer } from "../utils/test/writeToBuffer.js";
+} from "../../utils/test/bufferToStream.js";
+import { writeToBuffer } from "../../utils/test/writeToBuffer.js";
 import { constBytes } from "./constBytes.js";
 
 describe("constBytes", () => {

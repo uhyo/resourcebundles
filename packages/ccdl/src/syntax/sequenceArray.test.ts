@@ -5,7 +5,7 @@ import {
 } from "../utils/test/bufferToStream.js";
 import { writeToBuffer } from "../utils/test/writeToBuffer.js";
 import { byteString } from "./byteString.js";
-import { constBytes } from "./constBytes.js";
+import { constBytes } from "./fragment/constBytes.js";
 import { sequenceArray } from "./sequenceArray.js";
 
 describe("sequenceArray", () => {

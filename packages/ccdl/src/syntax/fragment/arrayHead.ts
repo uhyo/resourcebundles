@@ -1,7 +1,7 @@
-import { assertMajorType } from "../error/assertion.js";
-import { CCDLSyntax } from "./internal/CCDLSyntax.js";
-import { countHead, readHead, writeHead } from "./internal/head.js";
-import { majorTypes } from "./internal/MajorType.js";
+import { assertMajorType } from "../../error/assertion.js";
+import { CCDLSyntax } from "../internal/CCDLSyntax.js";
+import { countHead, readHead, writeHead } from "../internal/head.js";
+import { majorTypes } from "../internal/MajorType.js";
 
 /**
  * Syntax for just reading/writing array head.

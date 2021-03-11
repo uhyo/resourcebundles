@@ -1,6 +1,6 @@
-import { bufferConcat } from "../utils/test/bufConcat.js";
-import { bufferToStream } from "../utils/test/bufferToStream.js";
-import { writeToBuffer } from "../utils/test/writeToBuffer.js";
+import { bufferConcat } from "../../utils/test/bufConcat.js";
+import { bufferToStream } from "../../utils/test/bufferToStream.js";
+import { writeToBuffer } from "../../utils/test/writeToBuffer.js";
 import { arrayHead } from "./arrayHead.js";
 
 describe("arrayHead", () => {

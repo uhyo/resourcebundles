@@ -1,6 +1,6 @@
-import { CCDLSyntaxError } from "../error/CCDLSyntaxError.js";
-import { readBytes } from "../stream/readBytes.js";
-import { NoDataCCDLSyntax } from "./internal/CCDLSyntax.js";
+import { CCDLSyntaxError } from "../../error/CCDLSyntaxError.js";
+import { readBytes } from "../../stream/readBytes.js";
+import { NoDataCCDLSyntax } from "../internal/CCDLSyntax.js";
 
 export interface ConstBytes extends NoDataCCDLSyntax<undefined> {
   bytes: Uint8Array;
