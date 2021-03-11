@@ -23,4 +23,5 @@ export const arrayHead: CCDLSyntax<number> = {
       data: additionalInfo,
     };
   },
+  rootSize: 0,
 };

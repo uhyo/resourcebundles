@@ -70,6 +70,14 @@ describe("byteString", () => {
         data: Buffer.from("pikachu"),
       });
     });
+    it("successful (empty string)", async () => {
+      const l = bufferToStream(bufferConcat(0b010_00000));
+      const result = await byteString.read(l);
+      expect(result).toEqual({
+        bytesRead: 1,
+        data: "",
+      });
+    });
     it("successful (data added later)", async () => {
       const [l] = asyncBufferToStream(bufferConcat(0b010_00111), "pika", "chu");
       const result = await byteString.read(l);

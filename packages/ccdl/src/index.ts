@@ -4,6 +4,7 @@ export { constBytes } from "./syntax/constBytes.js";
 export { group } from "./syntax/group.js";
 export { bytesCbor } from "./syntax/high-level/bytesCbor.js";
 export { map } from "./syntax/map.js";
+export { repeatArray } from "./syntax/repeatArray.js";
 export { sequenceArray } from "./syntax/sequenceArray.js";
 export { textString } from "./syntax/textString.js";
 export { uint } from "./syntax/uint.js";

@@ -26,5 +26,6 @@ export function constBytes(bytes: Uint8Array): ConstBytes {
         data: undefined,
       };
     },
+    rootSize: 0,
   };
 }

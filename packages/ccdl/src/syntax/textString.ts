@@ -26,4 +26,5 @@ export const textString: CCDLSyntax<string> = {
       data: buf.toString("utf8"),
     };
   },
+  rootSize: 1,
 };

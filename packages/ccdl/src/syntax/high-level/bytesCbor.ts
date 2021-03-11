@@ -42,5 +42,6 @@ export function bytesCbor<Output, Input>(
         data,
       };
     },
+    rootSize: 1,
   };
 }

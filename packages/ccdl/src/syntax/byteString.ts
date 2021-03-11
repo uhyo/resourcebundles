@@ -26,4 +26,5 @@ export const byteString: CCDLSyntax<Buffer, string | Buffer> = {
       data: buf,
     };
   },
+  rootSize: 1,
 };

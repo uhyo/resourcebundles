@@ -68,5 +68,6 @@ export function sequenceArray<Defs extends readonly CCDLSyntax<any>[]>(
         data: result as any,
       };
     },
+    rootSize: 1,
   };
 }

@@ -58,5 +58,6 @@ export function map<KeyOutput, KeyInput, ValueOutput, ValueInput>(
         data: result,
       };
     },
+    rootSize: 1,
   };
 }

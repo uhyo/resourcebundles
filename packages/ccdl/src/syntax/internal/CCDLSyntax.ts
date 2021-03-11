@@ -18,6 +18,10 @@ export type CCDLSyntax<OutputDataType, InputDataType = OutputDataType> = {
    * Read data from given readable stream.
    */
   read(stream: Readable): Promise<ReadResult<OutputDataType>>;
+  /**
+   * Number of root objects that this syntax produces.
+   */
+  rootSize: number;
 };
 
 export type NoDataCCDLSyntax<OutputDataType, InputDataType = OutputDataType> = {
@@ -33,6 +37,10 @@ export type NoDataCCDLSyntax<OutputDataType, InputDataType = OutputDataType> = {
    * Read data from given readable stream.
    */
   read(stream: Readable): Promise<ReadResult<OutputDataType>>;
+  /**
+   * Number of root objects that this syntax produces.
+   */
+  rootSize: number;
 };
 
 export type CCDLSyntaxMaybeNodata<

@@ -18,4 +18,5 @@ export const uint: CCDLSyntax<number> = {
       data: additionalInfo,
     };
   },
+  rootSize: 1,
 };

@@ -2,6 +2,9 @@ import { Readable } from "node:stream";
 import { CCDLSyntaxError } from "../error/CCDLSyntaxError";
 
 export function readBytes(stream: Readable, bytes: number): Promise<Buffer> {
+  if (bytes === 0) {
+    return Promise.resolve(Buffer.allocUnsafe(0));
+  }
   return Promise.race([readBytesRaw(stream, bytes), convertEndToError(stream)]);
 }
 

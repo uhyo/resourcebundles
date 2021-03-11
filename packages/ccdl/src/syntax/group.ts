@@ -51,5 +51,6 @@ export function group<Defs extends readonly CCDLSyntax<any>[]>(
         data: result as any,
       };
     },
+    rootSize: defs.reduce((acc, d) => acc + d.rootSize, 0),
   };
 }
