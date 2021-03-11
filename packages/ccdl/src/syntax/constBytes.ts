@@ -13,6 +13,9 @@ export function constBytes(bytes: Uint8Array): ConstBytes {
       stream.write(this.bytes);
       return this.bytes.length;
     },
+    count() {
+      return this.bytes.length;
+    },
     async read(stream) {
       const data = await readBytes(stream, this.bytes.length);
       if (!data.equals(this.bytes)) {

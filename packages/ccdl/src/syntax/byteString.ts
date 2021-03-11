@@ -1,7 +1,7 @@
 import { assertMajorType } from "../error/assertion";
 import { readBytes } from "../stream/readBytes";
 import { CCDLSyntax } from "./internal/CCDLSyntax";
-import { readHead, writeHead } from "./internal/head";
+import { countHead, readHead, writeHead } from "./internal/head";
 import { majorTypes } from "./internal/MajorType";
 
 export function byteString(): CCDLSyntax<Buffer, string | Buffer> {
@@ -13,6 +13,10 @@ export function byteString(): CCDLSyntax<Buffer, string | Buffer> {
       // write body.
       stream.write(data);
       return headerBytes + length;
+    },
+    count(data) {
+      const length = Buffer.byteLength(data);
+      return countHead(length) + length;
     },
     async read(stream) {
       const { majorType, additionalInfo, bytesRead } = await readHead(stream);

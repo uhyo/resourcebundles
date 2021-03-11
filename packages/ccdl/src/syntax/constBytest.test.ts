@@ -15,6 +15,11 @@ describe("constBytes", () => {
     });
     expect(res).toEqual(buf);
   });
+  it("count", () => {
+    const buf = Buffer.from("pikachu");
+    const syntax = constBytes(buf);
+    expect(syntax.count()).toBe(7);
+  });
   describe("decode", () => {
     it("successful", async () => {
       const buf = Buffer.from([0x30, 0x31, 0x35, 0x99, 0x31]);

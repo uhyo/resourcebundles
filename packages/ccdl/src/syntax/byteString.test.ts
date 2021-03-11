@@ -53,6 +53,33 @@ describe("byteString", () => {
       );
     });
   });
+  describe("count", () => {
+    it("count short string", async () => {
+      const syntax = byteString();
+
+      expect(syntax.count("Pika!")).toEqual(1 + 5);
+    });
+    it("count UTF-8", async () => {
+      const syntax = byteString();
+
+      expect(syntax.count("富士山🗻")).toEqual(1 + 3 * 3 + 4);
+    });
+    it("count 100 bytes", async () => {
+      const syntax = byteString();
+
+      expect(syntax.count("🙂".repeat(25))).toEqual(2 + 4 * 25);
+    });
+    it("count 1024 bytes", async () => {
+      const syntax = byteString();
+
+      expect(syntax.count("z".repeat(1024))).toEqual(3 + 1024);
+    });
+    it("count 100000 bytes", async () => {
+      const syntax = byteString();
+
+      expect(syntax.count("a".repeat(100_000))).toEqual(5 + 100_000);
+    });
+  });
   describe("decode", () => {
     it("successful", async () => {
       const buf = bufferConcat(0b010_00111, "pikachu");
