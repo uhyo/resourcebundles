@@ -33,3 +33,21 @@ export function countByteString(str: string | Buffer): number {
   const length = Buffer.byteLength(str, "utf8");
   return countTagAndAdditionalValue(majorTags.byteString, length) + length;
 }
+
+/**
+ * Count bytes to write given object as a map.
+ */
+export function countByteStringMapObject<T>(
+  map: Record<string, T>,
+  elementCounter: (value: T) => number
+): number {
+  let result = 0;
+  const entries = Object.entries(map);
+  const mapSize = entries.length;
+  result += countTagAndAdditionalValue(majorTags.map, mapSize);
+  for (const [key, element] of entries) {
+    result += countByteString(key);
+    result += elementCounter(element);
+  }
+  return result;
+}
