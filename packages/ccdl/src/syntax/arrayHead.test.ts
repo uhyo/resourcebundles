@@ -68,7 +68,7 @@ describe("arrayHead", () => {
       const l = bufferToStream(bufferConcat(0b010_00001, "a"));
       const syntax = arrayHead();
       await expect(syntax.read(l)).rejects.toThrow(
-        "Expected major type 2, received 4"
+        "Expected major type 4, received 2"
       );
     });
   });

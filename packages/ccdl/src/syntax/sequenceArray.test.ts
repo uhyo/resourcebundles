@@ -82,7 +82,7 @@ describe("sequenceArray", () => {
       const l = bufferToStream(bufferConcat(0b010_00001, "a"));
       const syntax = sequenceArray();
       await expect(syntax.read(l)).rejects.toThrow(
-        "Expected major type 2, received 4"
+        "Expected major type 4, received 2"
       );
     });
     it("failure (array length)", async () => {

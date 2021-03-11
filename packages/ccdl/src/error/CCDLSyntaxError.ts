@@ -7,6 +7,6 @@ export function unexpectedMajorTypeError(
   actual: MajorType
 ): CCDLSyntaxError {
   return new CCDLSyntaxError(
-    `Expected major type ${actual}, received ${expected}`
+    `Expected major type ${expected}, received ${actual}`
   );
 }

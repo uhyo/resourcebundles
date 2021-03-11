@@ -109,7 +109,7 @@ describe("byteString", () => {
       const l = bufferToStream(bufferConcat(0b100_00000));
       const syntax = byteString();
       await expect(syntax.read(l)).rejects.toThrow(
-        "Expected major type 4, received 2"
+        "Expected major type 2, received 4"
       );
     });
   });
