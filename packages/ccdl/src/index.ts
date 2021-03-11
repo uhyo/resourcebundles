@@ -1,5 +1,6 @@
 export { byteString } from "./syntax/byteString.js";
 export { arrayHead } from "./syntax/fragment/arrayHead.js";
+export { byteStringHead } from "./syntax/fragment/byteStringHead.js";
 export { constBytes } from "./syntax/fragment/constBytes.js";
 export { group } from "./syntax/group.js";
 export { bytesCbor } from "./syntax/high-level/bytesCbor.js";
