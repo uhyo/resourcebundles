@@ -1,15 +1,17 @@
 import { Transform, TransformCallback } from "node:stream";
 
 /**
- * Stream that counts length of data that passed through and writes that data at the end.
+ * Stream that counts length of data that passed through and gives change of writeing that data at the end.
  */
 export class LengthCountingStream extends Transform {
-  #lengthCount = 0n;
+  #lengthCount = 0;
+  #finalize: (length: number) => Buffer;
 
-  constructor() {
+  constructor(finalize: (length: number) => Buffer) {
     super({
       allowHalfOpen: true,
     });
+    this.#finalize = finalize;
   }
 
   _transform(
@@ -17,14 +19,12 @@ export class LengthCountingStream extends Transform {
     _encoding: BufferEncoding,
     callback: TransformCallback
   ) {
-    this.#lengthCount += BigInt(chunk.length);
+    this.#lengthCount += chunk.length;
     callback(null, chunk);
   }
 
   _flush(callback: TransformCallback) {
-    // write total data in 8 bytes BE
-    const buf = Buffer.alloc(8);
-    buf.writeBigUInt64BE(this.#lengthCount + 8n);
+    const buf = this.#finalize(this.#lengthCount);
     this.push(buf);
     callback();
   }
