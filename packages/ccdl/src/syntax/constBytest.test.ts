@@ -1,24 +1,25 @@
-import { PassThrough } from "node:stream";
-import { receiveToBuffer } from "../utils/test/receiveToBuffer";
-import { constBytes } from "./constBytes";
+import {
+  asyncBufferToStream,
+  bufferToStream,
+} from "../utils/test/bufferToStream.js";
+import { writeToBuffer } from "../utils/test/writeToBuffer.js";
+import { constBytes } from "./constBytes.js";
 
 describe("constBytes", () => {
   it("encode", async () => {
     const buf = Buffer.from([0x30, 0x31, 0x35, 0x99, 0x31]);
     const syntax = constBytes(buf);
 
-    const l = new PassThrough();
-    syntax.encode(l);
-    l.end();
-    const res = await receiveToBuffer(l);
+    const res = await writeToBuffer((l) => {
+      syntax.encode(l);
+    });
     expect(res).toEqual(buf);
   });
   describe("decode", () => {
     it("successful", async () => {
       const buf = Buffer.from([0x30, 0x31, 0x35, 0x99, 0x31]);
       const syntax = constBytes(buf);
-      const l = new PassThrough();
-      l.write(buf);
+      const l = bufferToStream(buf);
       const result = await syntax.read(l);
       expect(result).toEqual({
         bytesRead: 5,
@@ -28,10 +29,12 @@ describe("constBytes", () => {
     it("successful (data added later)", async () => {
       const buf = Buffer.from([0x30, 0x31, 0x35, 0x99, 0x31]);
       const syntax = constBytes(buf);
-      const l = new PassThrough();
-      const p = syntax.read(l);
-      l.write(Buffer.concat([buf, Buffer.from([0x32, 0x33])]));
-      const result = await p;
+      const [l] = asyncBufferToStream(
+        buf.slice(0, 3),
+        buf.slice(3),
+        Buffer.from([0x32, 0x33])
+      );
+      const result = await syntax.read(l);
       expect(result).toEqual({
         bytesRead: 5,
         data: undefined,
@@ -40,17 +43,13 @@ describe("constBytes", () => {
     it("failure (insufficient data)", async () => {
       const buf = Buffer.from([0x30, 0x31, 0x35, 0x99, 0x31]);
       const syntax = constBytes(buf);
-      const l = new PassThrough();
-      l.write(Buffer.from([0x30, 0x31, 0x35]));
-      l.end();
+      const l = bufferToStream(Buffer.from([0x30, 0x31, 0x35]));
       await expect(syntax.read(l)).rejects.toThrow("Unexpected end of input");
     });
     it("failure (wrong data)", async () => {
       const buf = Buffer.from([0x30, 0x31, 0x35, 0x99, 0x31]);
       const syntax = constBytes(buf);
-      const l = new PassThrough();
-      l.write("z".repeat(100));
-      l.end();
+      const l = bufferToStream("z".repeat(100));
       await expect(syntax.read(l)).rejects.toThrow("Data unmatch");
     });
   });

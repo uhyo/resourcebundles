@@ -1,6 +1,6 @@
 import { CCDLSyntaxError } from "../error/CCDLSyntaxError.js";
 import { readBytes } from "../stream/readBytes.js";
-import { CCDLSyntax } from "./CCDLSyntax.js";
+import { CCDLSyntax } from "./internal/CCDLSyntax.js";
 
 interface ConstBytes extends CCDLSyntax<undefined> {
   bytes: Uint8Array;
@@ -11,6 +11,7 @@ export function constBytes(bytes: Uint8Array): ConstBytes {
     bytes,
     encode(stream) {
       stream.write(this.bytes);
+      return this.bytes.length;
     },
     async read(stream) {
       const data = await readBytes(stream, this.bytes.length);

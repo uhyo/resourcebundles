@@ -6,16 +6,17 @@ export async function readBytes(
   bytes: number
 ): Promise<Buffer> {
   while (true) {
-    const data: Buffer | null = stream.read(bytes);
+    const data: string | Buffer | null = stream.read(bytes);
     if (data === null) {
       await awaitReadable(stream);
       continue;
     }
-    if (data.length < bytes) {
+    const buf = Buffer.from(data);
+    if (buf.length < bytes) {
       // stream ended before providing sufficient bytes
       throw new CCDLSyntaxError("Unexpected end of input");
     }
-    return data;
+    return buf;
   }
 }
 
