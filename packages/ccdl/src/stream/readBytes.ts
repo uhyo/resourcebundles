@@ -1,23 +1,17 @@
 import { Readable } from "node:stream";
 import { CCDLSyntaxError } from "../error/CCDLSyntaxError";
 
-export async function readBytes(
-  stream: Readable,
-  bytes: number
-): Promise<Buffer> {
-  let nullFlag = false;
+export function readBytes(stream: Readable, bytes: number): Promise<Buffer> {
+  return Promise.race([readBytesRaw(stream, bytes), convertEndToError(stream)]);
+}
+
+async function readBytesRaw(stream: Readable, bytes: number): Promise<Buffer> {
   while (true) {
     const data: string | Buffer | null = stream.read(bytes);
     if (data === null) {
-      if (!nullFlag) {
-        await awaitReadable(stream);
-        nullFlag = true;
-        continue;
-      }
-      // "readable" was emitted but still null. This means that the stream has reacted end
-      break;
+      await awaitReadable(stream);
+      continue;
     }
-    nullFlag = false;
     const buf = Buffer.from(data);
     if (buf.length < bytes) {
       // stream ended before providing sufficient bytes
@@ -34,6 +28,14 @@ function awaitReadable(stream: Readable): Promise<void> {
     stream.once("readable", () => {
       stream.removeListener("error", reject);
       resolve();
+    });
+  });
+}
+
+function convertEndToError(stream: Readable): Promise<never> {
+  return new Promise((_resolve, reject) => {
+    stream.once("end", () => {
+      reject(new CCDLSyntaxError("Unexpected end of input"));
     });
   });
 }
