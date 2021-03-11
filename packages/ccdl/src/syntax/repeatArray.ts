@@ -16,14 +16,14 @@ export function repeatArray<Output, Input>(
 ): RepeatArraySyntax<Output, Input> {
   return {
     syntax,
-    encode(stream, data) {
+    async encode(stream, data) {
       let bytesWritten = writeHead(
         stream,
         majorTypes.array,
         data.length * syntax.rootSize
       );
       for (const element of data) {
-        bytesWritten += this.syntax.encode(stream, element);
+        bytesWritten += await this.syntax.encode(stream, element);
       }
       return bytesWritten;
     },

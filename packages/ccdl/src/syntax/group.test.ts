@@ -13,15 +13,15 @@ describe("group", () => {
     it("encode empty group", async () => {
       const syntax = group();
 
-      const res = await writeToBuffer((l) => {
-        syntax.encode(l, []);
+      const res = await writeToBuffer(async (l) => {
+        await syntax.encode(l, []);
       });
       expect(res).toEqual(bufferConcat());
     });
     it("encode [bstr, uint]", async () => {
       const syntax = group(byteString, uint);
-      const res = await writeToBuffer((l) => {
-        syntax.encode(l, ["hello", 3]);
+      const res = await writeToBuffer(async (l) => {
+        await syntax.encode(l, ["hello", 3]);
       });
       expect(res).toEqual(bufferConcat(0b010_00101, "hello", 0b000_00011));
     });

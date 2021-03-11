@@ -14,10 +14,10 @@ export function bytesCbor<Output, Input>(
 ): BytesCborSyntax<Output, Input> {
   return {
     syntax,
-    encode(stream, data) {
+    async encode(stream, data) {
       const length = this.syntax.count(data);
       const headBytes = writeHead(stream, majorTypes.byteString, length);
-      const mainBytes = this.syntax.encode(stream, data);
+      const mainBytes = await this.syntax.encode(stream, data);
       return headBytes + mainBytes;
     },
     count(data) {

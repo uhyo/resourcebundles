@@ -15,22 +15,22 @@ describe("repeatArray", () => {
     it("encode empty repeatArray", async () => {
       const syntax = repeatArray(byteString);
 
-      const res = await writeToBuffer((l) => {
-        syntax.encode(l, []);
+      const res = await writeToBuffer(async (l) => {
+        await syntax.encode(l, []);
       });
       expect(res).toEqual(bufferConcat(0b100_00000));
     });
     it("encode singleton", async () => {
       const syntax = repeatArray(textString);
-      const res = await writeToBuffer((l) => {
-        syntax.encode(l, ["hello"]);
+      const res = await writeToBuffer(async (l) => {
+        await syntax.encode(l, ["hello"]);
       });
       expect(res).toEqual(bufferConcat(0b100_00001, 0b011_00101, "hello"));
     });
     it("encode two items", async () => {
       const syntax = repeatArray(textString);
-      const res = await writeToBuffer((l) => {
-        syntax.encode(l, ["pika", "chu"]);
+      const res = await writeToBuffer(async (l) => {
+        await syntax.encode(l, ["pika", "chu"]);
       });
       expect(res).toEqual(
         bufferConcat(
@@ -44,8 +44,8 @@ describe("repeatArray", () => {
     });
     it("repeatArray of group", async () => {
       const syntax = repeatArray(group(textString, uint));
-      const res = await writeToBuffer((l) => {
-        syntax.encode(l, [
+      const res = await writeToBuffer(async (l) => {
+        await syntax.encode(l, [
           ["pika", 1],
           ["chu", 2],
         ]);

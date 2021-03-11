@@ -9,7 +9,7 @@ export interface ConstBytes extends NoDataCCDLSyntax<undefined> {
 export function constBytes(bytes: Uint8Array): ConstBytes {
   return {
     bytes,
-    encode(stream) {
+    async encode(stream) {
       stream.write(this.bytes);
       return this.bytes.length;
     },

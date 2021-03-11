@@ -6,20 +6,20 @@ import { arrayHead } from "./arrayHead.js";
 describe("arrayHead", () => {
   describe("encode", () => {
     it("empty array head", async () => {
-      const res = await writeToBuffer((l) => {
-        arrayHead.encode(l, 0);
+      const res = await writeToBuffer(async (l) => {
+        await arrayHead.encode(l, 0);
       });
       expect(res).toEqual(bufferConcat(0b100_00000));
     });
     it("encode 1", async () => {
-      const res = await writeToBuffer((l) => {
-        arrayHead.encode(l, 1);
+      const res = await writeToBuffer(async (l) => {
+        await arrayHead.encode(l, 1);
       });
       expect(res).toEqual(bufferConcat(0b100_00001));
     });
     it("encode 200", async () => {
-      const res = await writeToBuffer((l) => {
-        arrayHead.encode(l, 200);
+      const res = await writeToBuffer(async (l) => {
+        await arrayHead.encode(l, 200);
       });
       expect(res).toEqual(bufferConcat(0b100_11000, 200));
     });

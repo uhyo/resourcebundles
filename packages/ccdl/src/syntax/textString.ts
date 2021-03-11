@@ -5,7 +5,7 @@ import { countHead, readHead, writeHead } from "./internal/head.js";
 import { majorTypes } from "./internal/MajorType.js";
 
 export const textString: CCDLSyntax<string> = {
-  encode(stream, data) {
+  async encode(stream, data) {
     const length = Buffer.byteLength(data, "utf8");
     // write length.
     const headerBytes = writeHead(stream, majorTypes.textString, length);

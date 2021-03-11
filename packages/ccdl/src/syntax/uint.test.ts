@@ -6,32 +6,32 @@ import { uint } from "./uint.js";
 describe("uint", () => {
   describe("encode", () => {
     it("0", async () => {
-      const res = await writeToBuffer((l) => {
-        uint.encode(l, 0);
+      const res = await writeToBuffer(async (l) => {
+        await uint.encode(l, 0);
       });
       expect(res).toEqual(bufferConcat(0b000_00000));
     });
     it("1", async () => {
-      const res = await writeToBuffer((l) => {
-        uint.encode(l, 1);
+      const res = await writeToBuffer(async (l) => {
+        await uint.encode(l, 1);
       });
       expect(res).toEqual(bufferConcat(0b000_00001));
     });
     it("255", async () => {
-      const res = await writeToBuffer((l) => {
-        uint.encode(l, 255);
+      const res = await writeToBuffer(async (l) => {
+        await uint.encode(l, 255);
       });
       expect(res).toEqual(bufferConcat(0b000_11000, 255));
     });
     it("65539", async () => {
-      const res = await writeToBuffer((l) => {
-        uint.encode(l, 65539);
+      const res = await writeToBuffer(async (l) => {
+        await uint.encode(l, 65539);
       });
       expect(res).toEqual(bufferConcat(0b000_11010, 0, 1, 0, 3));
     });
     it("2 ** 40 + 128", async () => {
-      const res = await writeToBuffer((l) => {
-        uint.encode(l, 2 ** 40 + 128);
+      const res = await writeToBuffer(async (l) => {
+        await uint.encode(l, 2 ** 40 + 128);
       });
       expect(res).toEqual(bufferConcat(0b000_11011, 0, 0, 1, 0, 0, 0, 0, 128));
     });

@@ -27,13 +27,13 @@ export function sequenceArray<Defs extends readonly CCDLSyntax<any>[]>(
 ): SequenceArray<Defs> {
   return {
     defs,
-    encode(stream, data) {
+    async encode(stream, data) {
       if (this.defs.length !== data.length) {
         throw new Error(`Data must have length ${this.defs.length}`);
       }
       let bytesWritten = writeHead(stream, majorTypes.array, data.length);
       for (const [i, def] of this.defs.entries()) {
-        bytesWritten += def.encode(stream, data[i]!);
+        bytesWritten += await def.encode(stream, data[i]!);
       }
       return bytesWritten;
     },

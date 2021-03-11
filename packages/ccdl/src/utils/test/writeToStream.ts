@@ -1,8 +1,10 @@
 import { PassThrough, Readable, Writable } from "node:stream";
 
-export function writeToStream(callback: (stream: Writable) => void): Readable {
+export async function writeToStream(
+  callback: (stream: Writable) => Promise<void>
+): Promise<Readable> {
   const l = new PassThrough();
-  callback(l);
+  await callback(l);
   l.end();
   return l;
 }

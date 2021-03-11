@@ -13,15 +13,15 @@ describe("sequenceArray", () => {
     it("encode empty array", async () => {
       const syntax = sequenceArray();
 
-      const res = await writeToBuffer((l) => {
-        syntax.encode(l, []);
+      const res = await writeToBuffer(async (l) => {
+        await syntax.encode(l, []);
       });
       expect(res).toEqual(bufferConcat(0b100_00000));
     });
     it("encode [bstr]", async () => {
       const syntax = sequenceArray(byteString);
-      const res = await writeToBuffer((l) => {
-        syntax.encode(l, ["hello"]);
+      const res = await writeToBuffer(async (l) => {
+        await syntax.encode(l, ["hello"]);
       });
       expect(res).toEqual(bufferConcat(0b100_00001, 0b010_00101, "hello"));
     });
@@ -31,8 +31,8 @@ describe("sequenceArray", () => {
         constBytes(Buffer.from("lo")),
         byteString
       );
-      const res = await writeToBuffer((l) => {
-        syntax.encode(l, [undefined, undefined, "pikachu"]);
+      const res = await writeToBuffer(async (l) => {
+        await syntax.encode(l, [undefined, undefined, "pikachu"]);
       });
       expect(res).toEqual(
         bufferConcat(0b100_00011, "hello", 0b010_00111, "pikachu")

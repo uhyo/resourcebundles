@@ -8,7 +8,7 @@ import { majorTypes } from "./internal/MajorType.js";
  * Note: user of this syntax is responsible to read/write array body correctly.
  */
 export const arrayHead: CCDLSyntax<number> = {
-  encode(stream, data) {
+  async encode(stream, data) {
     // write length.
     return writeHead(stream, majorTypes.array, data);
   },

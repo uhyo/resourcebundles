@@ -23,10 +23,10 @@ export function group<Defs extends readonly CCDLSyntax<any>[]>(
 ): GroupSyntax<Defs> {
   return {
     defs,
-    encode(stream, data) {
+    async encode(stream, data) {
       let bytesWritten = 0;
       for (const [i, def] of this.defs.entries()) {
-        bytesWritten += def.encode(stream, data[i]!);
+        bytesWritten += await def.encode(stream, data[i]!);
       }
       return bytesWritten;
     },

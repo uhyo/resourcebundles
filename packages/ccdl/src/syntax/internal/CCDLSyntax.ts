@@ -9,7 +9,7 @@ export type CCDLSyntax<OutputDataType, InputDataType = OutputDataType> = {
   /**
    * Encode given data into given writable stream.
    */
-  encode(stream: Writable, data: InputDataType): number;
+  encode(stream: Writable, data: InputDataType): Promise<number>;
   /**
    * Return bytes to write without actually writing.
    */
@@ -28,7 +28,7 @@ export type NoDataCCDLSyntax<OutputDataType, InputDataType = OutputDataType> = {
   /**
    * Encode given data into given writable stream.
    */
-  encode(stream: Writable, data?: InputDataType): number;
+  encode(stream: Writable, data?: InputDataType): Promise<number>;
   /**
    * Return bytes to write without actually writing.
    */

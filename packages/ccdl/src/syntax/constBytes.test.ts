@@ -10,8 +10,8 @@ describe("constBytes", () => {
     const buf = Buffer.from([0x30, 0x31, 0x35, 0x99, 0x31]);
     const syntax = constBytes(buf);
 
-    const res = await writeToBuffer((l) => {
-      syntax.encode(l);
+    const res = await writeToBuffer(async (l) => {
+      await syntax.encode(l);
     });
     expect(res).toEqual(buf);
   });

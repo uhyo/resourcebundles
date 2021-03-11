@@ -9,34 +9,34 @@ import { byteString } from "./byteString.js";
 describe("byteString", () => {
   describe("encode", () => {
     it("encode short string", async () => {
-      const res = await writeToBuffer((l) => {
-        byteString.encode(l, "hello");
+      const res = await writeToBuffer(async (l) => {
+        await byteString.encode(l, "hello");
       });
       expect(res).toEqual(bufferConcat(0b010_00101, "hello"));
     });
     it("encode UTF-8", async () => {
-      const res = await writeToBuffer((l) => {
-        byteString.encode(l, "吉野家😃");
+      const res = await writeToBuffer(async (l) => {
+        await byteString.encode(l, "吉野家😃");
       });
       expect(res).toEqual(bufferConcat(0b010_01101, "吉野家😃"));
     });
     it("encode 100 bytes", async () => {
-      const res = await writeToBuffer((l) => {
-        byteString.encode(l, "x".repeat(100));
+      const res = await writeToBuffer(async (l) => {
+        await byteString.encode(l, "x".repeat(100));
       });
       expect(res).toEqual(bufferConcat(0b010_11000, 100, "x".repeat(100)));
     });
     it("encode 1025 bytes", async () => {
-      const res = await writeToBuffer((l) => {
-        byteString.encode(l, "z".repeat(1025));
+      const res = await writeToBuffer(async (l) => {
+        await byteString.encode(l, "z".repeat(1025));
       });
       expect(res).toEqual(
         bufferConcat(0b010_11001, 0b100, 0b0000_0001, "z".repeat(1025))
       );
     });
     it("encode 65536 bytes", async () => {
-      const res = await writeToBuffer((l) => {
-        byteString.encode(l, "a".repeat(65536));
+      const res = await writeToBuffer(async (l) => {
+        await byteString.encode(l, "a".repeat(65536));
       });
       expect(res).toEqual(
         bufferConcat(0b010_11010, 0, 1, 0, 0, "a".repeat(65536))
@@ -75,7 +75,7 @@ describe("byteString", () => {
       const result = await byteString.read(l);
       expect(result).toEqual({
         bytesRead: 1,
-        data: "",
+        data: Buffer.allocUnsafe(0),
       });
     });
     it("successful (data added later)", async () => {

@@ -4,7 +4,7 @@ import { countHead, readHead, writeHead } from "./internal/head.js";
 import { majorTypes } from "./internal/MajorType.js";
 
 export const uint: CCDLSyntax<number> = {
-  encode(stream, data) {
+  async encode(stream, data) {
     return writeHead(stream, majorTypes.uint, data);
   },
   count(data) {

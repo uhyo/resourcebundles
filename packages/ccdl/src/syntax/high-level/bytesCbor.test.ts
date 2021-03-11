@@ -15,15 +15,15 @@ describe("bytesCbor", () => {
   describe("encode", () => {
     it("encode uint", async () => {
       const syntax = bytesCbor(uint);
-      const res = await writeToBuffer((l) => {
-        syntax.encode(l, 4);
+      const res = await writeToBuffer(async (l) => {
+        await syntax.encode(l, 4);
       });
       expect(res).toEqual(bufferConcat(0b010_00001, 0b000_00100));
     });
     it("encode map", async () => {
       const syntax = bytesCbor(map(textString, textString));
-      const res = await writeToBuffer((l) => {
-        syntax.encode(
+      const res = await writeToBuffer(async (l) => {
+        await syntax.encode(
           l,
           new Map([
             ["foo", "bar"],

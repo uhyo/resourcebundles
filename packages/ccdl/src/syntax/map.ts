@@ -21,11 +21,11 @@ export function map<KeyOutput, KeyInput, ValueOutput, ValueInput>(
   return {
     keySyntax,
     valueSyntax,
-    encode(stream, data) {
+    async encode(stream, data) {
       let bytesWritten = writeHead(stream, majorTypes.map, data.size);
       for (const [key, value] of data) {
-        bytesWritten += this.keySyntax.encode(stream, key);
-        bytesWritten += this.valueSyntax.encode(stream, value);
+        bytesWritten += await this.keySyntax.encode(stream, key);
+        bytesWritten += await this.valueSyntax.encode(stream, value);
       }
       return bytesWritten;
     },

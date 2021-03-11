@@ -13,15 +13,15 @@ describe("map", () => {
     it("encode empty map", async () => {
       const syntax = map(byteString, byteString);
 
-      const res = await writeToBuffer((l) => {
-        syntax.encode(l, new Map());
+      const res = await writeToBuffer(async (l) => {
+        await syntax.encode(l, new Map());
       });
       expect(res).toEqual(bufferConcat(0b101_00000));
     });
     it("encode singleton", async () => {
       const syntax = map(byteString, byteString);
-      const res = await writeToBuffer((l) => {
-        syntax.encode(l, new Map([["hello", "world"]]));
+      const res = await writeToBuffer(async (l) => {
+        await syntax.encode(l, new Map([["hello", "world"]]));
       });
       expect(res).toEqual(
         bufferConcat(0b101_00001, 0b010_00101, "hello", 0b010_00101, "world")
@@ -29,8 +29,8 @@ describe("map", () => {
     });
     it("encode two items", async () => {
       const syntax = map(byteString, uint);
-      const res = await writeToBuffer((l) => {
-        syntax.encode(
+      const res = await writeToBuffer(async (l) => {
+        await syntax.encode(
           l,
           new Map([
             ["hello", 0],
