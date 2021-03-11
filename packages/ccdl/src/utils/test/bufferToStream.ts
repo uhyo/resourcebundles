@@ -3,10 +3,16 @@ import { PassThrough, Readable } from "node:stream";
 /**
  * Creates a readable stream that emits given buffer.
  */
-export function bufferToStream(...bufs: (string | Buffer)[]): Readable {
+export function bufferToStream(
+  ...bufs: (number | string | Buffer)[]
+): Readable {
   const l = new PassThrough();
   for (const chunk of bufs) {
-    l.write(chunk);
+    if (typeof chunk === "number") {
+      l.write(Buffer.from([chunk]));
+    } else {
+      l.write(chunk);
+    }
   }
   l.end();
   return l;
@@ -16,13 +22,17 @@ export function bufferToStream(...bufs: (string | Buffer)[]): Readable {
  * Creates a readable stream that emits given buffer. Chunks are added asynchronously.
  */
 export function asyncBufferToStream(
-  ...bufs: (string | Buffer)[]
+  ...bufs: (number | string | Buffer)[]
 ): [Readable, Promise<void>] {
   const l = new PassThrough();
   const p = (async () => {
     for (const chunk of bufs) {
       await null;
-      l.write(chunk);
+      if (typeof chunk === "number") {
+        l.write(Buffer.from([chunk]));
+      } else {
+        l.write(chunk);
+      }
     }
     l.end();
   })();

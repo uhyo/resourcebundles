@@ -1,10 +1,10 @@
-import { assertMajorType } from "../error/assertion";
-import { readBytes } from "../stream/readBytes";
-import { CCDLSyntax } from "./internal/CCDLSyntax";
-import { countHead, readHead, writeHead } from "./internal/head";
-import { majorTypes } from "./internal/MajorType";
+import { assertMajorType } from "../error/assertion.js";
+import { readBytes } from "../stream/readBytes.js";
+import { CCDLSyntaxMaybeNodata } from "./internal/CCDLSyntax.js";
+import { countHead, readHead, writeHead } from "./internal/head.js";
+import { majorTypes } from "./internal/MajorType.js";
 
-export function byteString(): CCDLSyntax<Buffer, string | Buffer> {
+export function byteString(): CCDLSyntaxMaybeNodata<Buffer, string | Buffer> {
   return {
     encode(stream, data) {
       const length = Buffer.byteLength(data);

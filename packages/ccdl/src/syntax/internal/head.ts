@@ -2,7 +2,7 @@ import { Readable, Writable } from "node:stream";
 import { readBytes } from "../../stream/readBytes.js";
 import { MajorType } from "./MajorType.js";
 
-export function countHead(additionalInfo: number) {
+export function countHead(additionalInfo: number): number {
   if (additionalInfo <= 23) {
     // immediate
     return 1;
@@ -23,7 +23,7 @@ export function writeHead(
   writable: Writable,
   majorType: MajorType,
   additionalInfo: number
-) {
+): number {
   const majorPart = majorType << 5;
   if (additionalInfo <= 23) {
     // immediate

@@ -6,3 +6,7 @@ export function assertMajorType(expected: MajorType, actual: MajorType) {
     throw unexpectedMajorTypeError(expected, actual);
   }
 }
+
+export function invariant(condition: boolean) {
+  throw new Error("Invariant Error");
+}
