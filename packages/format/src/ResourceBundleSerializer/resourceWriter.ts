@@ -32,7 +32,9 @@ const resourceWriter: CCDLSyntax<Resource["payload"]> = {
       }
       case "file": {
         const fileDataStream = createReadStream(payload.fileName);
-        fileDataStream.pipe(stream);
+        fileDataStream.pipe(stream, {
+          end: false,
+        });
         await waitForReadableStream(fileDataStream);
         return headerBytes + payload.fileSize;
       }
