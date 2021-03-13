@@ -8,6 +8,7 @@ import {
 } from "@resourcebundles/ccdl";
 import { stat } from "node:fs/promises";
 import { Readable, Writable } from "node:stream";
+import { magicNumber, versionNumber } from "../syntax/const.js";
 import { indexSyntax } from "../syntax/index.js";
 import { sectionLengthsSyntax } from "../syntax/sectionLengths.js";
 import { iterMap } from "../utils/iter/map.js";
@@ -81,10 +82,10 @@ export class ResourceBundleSerializer {
     await arrayHead.encode(result, 5);
     // magic number
     // magic: h'F0 9F 8C 90 F0 9F 93 A6'
-    await byteString.encode(result, "🌐📦");
+    await byteString.encode(result, magicNumber);
     // version
     // version: bytes .size 4
-    await byteString.encode(result, Buffer.from([0x31, 0, 0, 0]));
+    await byteString.encode(result, versionNumber);
 
     type ResourceMapItem = InferInputFromSyntax<
       typeof resourceSectionItemSyntax
