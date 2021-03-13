@@ -15,7 +15,7 @@ describe("ResourceBundleSerializer", () => {
         // magic number
         Buffer.from("🌐📦"),
         // verison
-        Buffer.from([0x31, 0, 0, 0]),
+        Buffer.from([0x62, 0, 0, 0]),
         // section-lengths
         encodeOne(["index", 1, "resources", 1]),
         // sections
@@ -51,7 +51,7 @@ describe("ResourceBundleSerializer", () => {
         // magic number
         Buffer.from("🌐📦"),
         // verison
-        Buffer.from([0x31, 0, 0, 0]),
+        Buffer.from([0x62, 0, 0, 0]),
         // section-lengths
         encodeOne([
           "index",
@@ -109,7 +109,7 @@ describe("ResourceBundleSerializer", () => {
         // magic number
         Buffer.from("🌐📦"),
         // verison
-        Buffer.from([0x31, 0, 0, 0]),
+        Buffer.from([0x62, 0, 0, 0]),
         // section-lengths
         encodeOne([
           "index",
