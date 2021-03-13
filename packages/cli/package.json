@@ -1,6 +1,6 @@
 {
   "name": "@resourcebundles/cli",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "CLI for inspecting and manipulating Resource Bundles",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -29,6 +29,7 @@
   "author": "uhyo <uhyo@uhy.ooo>",
   "license": "MIT",
   "dependencies": {
+    "@resourcebundles/format": "0.1.1",
     "chalk": "^4.1.0",
     "mime": "^2.5.2",
     "yargs": "^16.2.0"

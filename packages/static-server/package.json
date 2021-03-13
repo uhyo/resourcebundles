@@ -1,6 +1,6 @@
 {
   "name": "@resourcebundles/static-server",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Static server that serves from Resource Bundle",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -33,6 +33,7 @@
     "typescript": "^4.2.3"
   },
   "dependencies": {
+    "@resourcebundles/format": "0.1.1",
     "fastify": "^3.14.0",
     "fastify-plugin": "^3.0.0",
     "yargs": "^16.2.0"

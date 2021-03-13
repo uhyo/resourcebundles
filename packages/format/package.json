@@ -1,6 +1,6 @@
 {
   "name": "@resourcebundles/format",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Package for parsing and serializing Resource Bundles format",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -36,6 +36,7 @@
     "typescript": "^4.2.3"
   },
   "dependencies": {
+    "@resourcebundles/ccdl": "0.1.0",
     "@types/node": "^14.14.33"
   }
 }
