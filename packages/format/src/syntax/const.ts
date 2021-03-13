@@ -6,4 +6,4 @@ export const magicNumber = "🌐📦";
 /**
  * Version number of Resource Bundle
  */
-export const versionNumber = Buffer.from([0x31, 0, 0, 0]);
+export const versionNumber = Buffer.from([0x62, 0, 0, 0]);
