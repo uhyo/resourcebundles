@@ -1,11 +1,11 @@
 import { arrayHead, byteString } from "@resourcebundles/ccdl";
 import { Readable } from "node:stream";
-import { indexSyntax } from "../syntax";
-import { magicNumber, versionNumber } from "../syntax/const";
-import { sectionLengthsSyntax } from "../syntax/sectionLengths";
-import { iterMap } from "../utils/iter/map";
-import { skipBytes } from "../utils/stream/skipBytes";
-import { ResourceBundleParseError } from "./ResourceBundleParseError";
+import { magicNumber, versionNumber } from "../syntax/const.js";
+import { indexSyntax } from "../syntax/index.js";
+import { sectionLengthsSyntax } from "../syntax/sectionLengths.js";
+import { iterMap } from "../utils/iter/map.js";
+import { skipBytes } from "../utils/stream/skipBytes.js";
+import { ResourceBundleParseError } from "./ResourceBundleParseError.js";
 
 export type ParseResourceBundleIndexOptions = {};
 

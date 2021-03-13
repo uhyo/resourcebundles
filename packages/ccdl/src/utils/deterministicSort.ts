@@ -1,4 +1,4 @@
-import { range } from "./iter/range";
+import { range } from "./iter/range.js";
 
 /**
  * Sort the entries in given map according to Core Deterministic Encoding Requirements (4.2.1 in RFC8949).

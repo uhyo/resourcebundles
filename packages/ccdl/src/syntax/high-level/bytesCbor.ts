@@ -1,8 +1,8 @@
-import { assertMajorType } from "../../error/assertion";
-import { CCDLSyntaxError } from "../../error/CCDLSyntaxError";
-import { CCDLSyntax } from "../internal/CCDLSyntax";
-import { countHead, readHead, writeHead } from "../internal/head";
-import { majorTypes } from "../internal/MajorType";
+import { assertMajorType } from "../../error/assertion.js";
+import { CCDLSyntaxError } from "../../error/CCDLSyntaxError.js";
+import { CCDLSyntax } from "../internal/CCDLSyntax.js";
+import { countHead, readHead, writeHead } from "../internal/head.js";
+import { majorTypes } from "../internal/MajorType.js";
 
 export type BytesCborSyntax<Output, Input> = CCDLSyntax<Output, Input> & {
   syntax: CCDLSyntax<Output, Input>;

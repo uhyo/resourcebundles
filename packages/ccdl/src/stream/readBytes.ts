@@ -1,5 +1,5 @@
 import { Readable } from "node:stream";
-import { CCDLSyntaxError } from "../error/CCDLSyntaxError";
+import { CCDLSyntaxError } from "../error/CCDLSyntaxError.js";
 
 export function readBytes(stream: Readable, bytes: number): Promise<Buffer> {
   if (bytes === 0) {
