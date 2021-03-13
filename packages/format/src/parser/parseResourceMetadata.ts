@@ -6,8 +6,8 @@ import {
   map,
 } from "@resourcebundles/ccdl";
 import { Readable } from "node:stream";
-import { iterMap } from "../utils/iter/map";
-import { ResourceBundleParseError } from "./ResourceBundleParseError";
+import { iterMap } from "../utils/iter/map.js";
+import { ResourceBundleParseError } from "./ResourceBundleParseError.js";
 
 export type ResourceMetadata = {
   bytesRead: number;
