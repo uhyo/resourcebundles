@@ -17,6 +17,7 @@ export type ResourceMetadata = {
 
 /**
  * Parses metadata of one resource from given stream.
+ * It also reads the byteString header of resource Payload.
  * Given stream must emit contents from the start of one resoucre CBOR object.
  */
 export async function parseResourceMetadata(

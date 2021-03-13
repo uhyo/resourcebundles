@@ -1,0 +1,30 @@
+{
+  "name": "@resourcebundles/static-server",
+  "version": "0.1.0",
+  "description": "Static server that serves from Resource Bundle",
+  "main": "dist/index.js",
+  "type": "module",
+  "types": "dist/index.d.ts",
+  "bin": {
+    "rbn-static-server": "dist/cli.js"
+  },
+  "scripts": {
+    "build": "tsc --build",
+    "watch": "tsc --build --watch",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "resourcebundles"
+  ],
+  "author": "uhyo <uhyo@uhy.ooo>",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/yargs": "^16.0.0",
+    "typescript": "^4.2.3"
+  },
+  "dependencies": {
+    "fastify": "^3.14.0",
+    "fastify-plugin": "^3.0.0",
+    "yargs": "^16.2.0"
+  }
+}
