@@ -24,6 +24,9 @@ export async function read({ file, output }: ReadOptions): Promise<void> {
       humanReadable(file, result);
       return;
     }
+    case "json": {
+      json(result);
+    }
   }
 }
 
@@ -79,4 +82,20 @@ function humanReadable(file: string, { resourceMetadata }: ReadBundleResult) {
       );
     }
   }
+}
+
+function json({ resourceMetadata }: ReadBundleResult) {
+  console.log(
+    JSON.stringify(
+      Object.fromEntries(
+        iterMap(resourceMetadata, ([resourceUrl, item]) => [
+          resourceUrl,
+          {
+            headers: Object.fromEntries(item.headers),
+            payloadSize: item.payloadSize,
+          },
+        ])
+      )
+    )
+  );
 }
