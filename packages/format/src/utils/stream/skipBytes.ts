@@ -14,10 +14,17 @@ export function skipBytes(
   if (bytes === 0) {
     return Promise.resolve();
   }
-  return Promise.race([
-    convertEndToError(stream, onUnexpectedEnd),
-    skipBytesImpl(stream, bytes),
-  ]);
+  return new Promise((resolve, reject) => {
+    const endHandler = () => reject(onUnexpectedEnd());
+    stream.on("end", endHandler);
+    stream.on("error", reject);
+    skipBytesImpl(stream, bytes)
+      .finally(() => {
+        stream.removeListener("end", endHandler);
+        stream.removeListener("error", endHandler);
+      })
+      .then(resolve);
+  });
 }
 
 async function skipBytesImpl(stream: Readable, bytes: number) {
@@ -43,22 +50,7 @@ async function skipBytesImpl(stream: Readable, bytes: number) {
 }
 
 function awaitReadable(stream: Readable): Promise<void> {
-  return new Promise((resolve, reject) => {
-    stream.once("error", reject);
-    stream.once("readable", () => {
-      stream.removeListener("error", reject);
-      resolve();
-    });
-  });
-}
-
-function convertEndToError(
-  stream: Readable,
-  onUnexpectedEnd: () => Error
-): Promise<never> {
-  return new Promise((_resolve, reject) => {
-    stream.once("end", () => {
-      reject(onUnexpectedEnd());
-    });
+  return new Promise((resolve) => {
+    stream.once("readable", resolve);
   });
 }

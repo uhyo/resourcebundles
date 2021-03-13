@@ -5,7 +5,19 @@ export function readBytes(stream: Readable, bytes: number): Promise<Buffer> {
   if (bytes === 0) {
     return Promise.resolve(Buffer.allocUnsafe(0));
   }
-  return Promise.race([readBytesRaw(stream, bytes), convertEndToError(stream)]);
+  return new Promise((resolve, reject) => {
+    const endHandler = () => {
+      reject(new CCDLSyntaxError("Unexpected end of input"));
+    };
+    stream.on("end", endHandler);
+    stream.on("error", reject);
+    readBytesRaw(stream, bytes)
+      .finally(() => {
+        stream.removeListener("end", endHandler);
+        stream.removeListener("error", reject);
+      })
+      .then(resolve);
+  });
 }
 
 async function readBytesRaw(stream: Readable, bytes: number): Promise<Buffer> {
@@ -26,19 +38,7 @@ async function readBytesRaw(stream: Readable, bytes: number): Promise<Buffer> {
 }
 
 function awaitReadable(stream: Readable): Promise<void> {
-  return new Promise((resolve, reject) => {
-    stream.on("error", reject);
-    stream.once("readable", () => {
-      stream.removeListener("error", reject);
-      resolve();
-    });
-  });
-}
-
-function convertEndToError(stream: Readable): Promise<never> {
-  return new Promise((_resolve, reject) => {
-    stream.once("end", () => {
-      reject(new CCDLSyntaxError("Unexpected end of input"));
-    });
+  return new Promise((resolve) => {
+    stream.once("readable", resolve);
   });
 }
