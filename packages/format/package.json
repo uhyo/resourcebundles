@@ -18,6 +18,11 @@
   "keywords": [
     "resourcebundles"
   ],
+  "files": [
+    "dist",
+    "!dist/.tsbuildinfo",
+    "src"
+  ],
   "author": "uhyo <uhyo@uhy.ooo>",
   "license": "MIT",
   "devDependencies": {
