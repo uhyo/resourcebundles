@@ -16,7 +16,7 @@ export function readBytes(stream: Readable, bytes: number): Promise<Buffer> {
         stream.removeListener("end", endHandler);
         stream.removeListener("error", reject);
       })
-      .then(resolve);
+      .then(resolve, reject);
   });
 }
 
