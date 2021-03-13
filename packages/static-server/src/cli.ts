@@ -24,13 +24,20 @@ yargs(process.argv.slice(2)).command(
   },
   (argv) => {
     (async () => {
-      const app = fastify();
+      const app = fastify({
+        logger: true,
+        rewriteUrl(req) {
+          if (req.url === "/") {
+            return "/index.html";
+          }
+          return req.url!;
+        },
+      });
       await app.register(resourceBundleStaticPlugin, {
         file: argv.file,
       });
 
-      const address = await app.listen(argv.port, argv.host);
-      console.log(`Listening at ${address}`);
+      await app.listen(argv.port, argv.host);
     })().catch((err) => {
       console.error(err);
       process.exit(1);
