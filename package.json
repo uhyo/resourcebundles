@@ -1,11 +1,12 @@
 {
   "name": "resourcebundles",
-  "version": "1.0.0",
+  "version": "0.1.2",
   "description": "",
   "main": "index.js",
   "private": true,
   "type": "module",
   "scripts": {
+    "release": "standard-version release",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "workspaces": [
@@ -15,6 +16,7 @@
   "license": "MIT",
   "devDependencies": {
     "prettier": "^2.2.1",
+    "standard-version": "^9.1.1",
     "typescript": "^4.2.3"
   }
 }
