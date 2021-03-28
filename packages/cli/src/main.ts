@@ -95,7 +95,8 @@ export function cli({ args, output, locale }: CLIOptions): Promise<void> {
         reject(msg);
       })
       .locale(locale || yargs.locale())
-      .demandCommand(1).argv;
+      .demandCommand(1)
+      .strictCommands().argv;
   }).finally(() => {
     output.end();
   });

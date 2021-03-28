@@ -169,4 +169,15 @@ describe("create", () => {
   });
 });
 
-describe("error for unknown command", () => {});
+describe("error handling", () => {
+  it("Unknown command", async () => {
+    const stream = new PassThrough();
+    await expect(
+      cli({
+        args: ["foobar"],
+        output: stream,
+        locale: "en",
+      })
+    ).rejects.toMatchInlineSnapshot(`"Unknown command: foobar"`);
+  });
+});
