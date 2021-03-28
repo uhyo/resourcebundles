@@ -32,7 +32,7 @@ export async function read({
       return;
     }
     case "json": {
-      json(result);
+      json(output, result);
     }
   }
 }
@@ -96,8 +96,8 @@ function humanReadable(
   }
 }
 
-function json({ resourceMetadata }: ReadBundleResult) {
-  console.log(
+function json(output: Writable, { resourceMetadata }: ReadBundleResult) {
+  output.write(
     JSON.stringify(
       Object.fromEntries(
         iterMap(resourceMetadata, ([resourceUrl, item]) => [
@@ -108,6 +108,6 @@ function json({ resourceMetadata }: ReadBundleResult) {
           },
         ])
       )
-    )
+    ) + "\n"
   );
 }

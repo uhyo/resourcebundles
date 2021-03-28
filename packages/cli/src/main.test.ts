@@ -38,4 +38,47 @@ describe("read", () => {
       "
     `);
   });
+  it("json", async () => {
+    const stream = new PassThrough();
+    await cli(
+      [
+        "read",
+        fileURLToPath(
+          path.join(
+            path.dirname(import.meta.url),
+            "../test-fixtures/website.rbn"
+          )
+        ),
+        "--output",
+        "json",
+      ],
+      stream
+    );
+    const obj = JSON.parse((await receiveToBuffer(stream)).toString("utf-8"));
+    expect(obj).toMatchInlineSnapshot(`
+Object {
+  "css.css": Object {
+    "headers": Object {
+      ":status": "200",
+      "content-type": "text/css",
+    },
+    "payloadSize": 99,
+  },
+  "index.html": Object {
+    "headers": Object {
+      ":status": "200",
+      "content-type": "text/html",
+    },
+    "payloadSize": 506,
+  },
+  "js.js": Object {
+    "headers": Object {
+      ":status": "200",
+      "content-type": "application/javascript",
+    },
+    "payloadSize": 13,
+  },
+}
+`);
+  });
 });
