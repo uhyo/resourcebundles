@@ -2,21 +2,29 @@ import { ResourceBundleSerializer } from "@resourcebundles/format";
 import mime from "mime";
 import { createWriteStream } from "node:fs";
 import path from "node:path";
-import { Stream } from "node:stream";
+import { Stream, Writable } from "node:stream";
 
-type WriteOptions = {
+type CreateOptions = {
   files: readonly string[];
   headers: readonly string[];
   rootDir: string | undefined;
-  outFile: string | undefined;
+  output:
+    | {
+        type: "file";
+        filePath: string;
+      }
+    | {
+        type: "stream";
+        stream: Writable;
+      };
 };
 
 export async function create({
   files,
   headers,
-  outFile,
+  output,
   rootDir = process.cwd(),
-}: WriteOptions) {
+}: CreateOptions) {
   const headersMap: Record<string, string> = Object.create(null);
   // parse and normalize headers and
   for (const h of headers) {
@@ -49,14 +57,15 @@ export async function create({
     await serializer.addResourceFromFile(resourceUrl, filePath, h);
   }
 
-  const outputStream = outFile ? createWriteStream(outFile) : process.stdout;
+  const outputStream =
+    output.type === "file" ? createWriteStream(output.filePath) : output.stream;
 
   const resourceBundleStream = serializer.serialize();
   resourceBundleStream.pipe(outputStream);
 
   await Promise.all([
     awaitStream(resourceBundleStream),
-    awaitStream(outputStream),
+    ...(output.type === "file" ? [awaitStream(outputStream)] : []),
   ]);
 }
 

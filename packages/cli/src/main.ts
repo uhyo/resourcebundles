@@ -62,7 +62,15 @@ export function cli(args: readonly string[], output: Writable): Promise<void> {
               files: handleOptionMultiple(argv.files),
               headers: handleOptionMultiple(argv.header),
               rootDir: argv.rootDir,
-              outFile: argv.out,
+              output: argv.out
+                ? {
+                    type: "file",
+                    filePath: argv.out,
+                  }
+                : {
+                    type: "stream",
+                    stream: output,
+                  },
             })
           );
         }

@@ -1,25 +1,20 @@
+import { mkdir, readFile, rm } from "node:fs/promises";
 import path from "node:path";
 import { PassThrough } from "node:stream";
 import { fileURLToPath } from "node:url";
 import { cli } from "./main";
 import { receiveToBuffer } from "./util/test/receiveToBuffer";
 
+const testFixturesDir = path.join(
+  path.dirname(fileURLToPath(import.meta.url)),
+  "../test-fixtures"
+);
+
 describe("read", () => {
   describe("outputs", () => {
     it("human-readable", async () => {
       const stream = new PassThrough();
-      await cli(
-        [
-          "read",
-          fileURLToPath(
-            path.join(
-              path.dirname(import.meta.url),
-              "../test-fixtures/website.rbn"
-            )
-          ),
-        ],
-        stream
-      );
+      await cli(["read", path.join(testFixturesDir, "website.rbn")], stream);
       expect((await receiveToBuffer(stream)).toString("utf-8"))
         .toMatchInlineSnapshot(`
               "[92m[1m🌐📦 /Users/JP25309/personal/resourcebundles/packages/cli/test-fixtures/website.rbn[22m[39m
@@ -42,17 +37,7 @@ describe("read", () => {
     it("json", async () => {
       const stream = new PassThrough();
       await cli(
-        [
-          "read",
-          fileURLToPath(
-            path.join(
-              path.dirname(import.meta.url),
-              "../test-fixtures/website.rbn"
-            )
-          ),
-          "--output",
-          "json",
-        ],
+        ["read", path.join(testFixturesDir, "website.rbn"), "--output", "json"],
         stream
       );
       const obj = JSON.parse((await receiveToBuffer(stream)).toString("utf-8"));
@@ -87,12 +72,7 @@ describe("read", () => {
       await cli(
         [
           "read",
-          fileURLToPath(
-            path.join(
-              path.dirname(import.meta.url),
-              "../test-fixtures/website.rbn"
-            )
-          ),
+          path.join(testFixturesDir, "website.rbn"),
           "--output",
           "url-only",
         ],
@@ -114,12 +94,7 @@ describe("read", () => {
         cli(
           [
             "read",
-            fileURLToPath(
-              path.join(
-                path.dirname(import.meta.url),
-                "../test-fixtures/website.rbn"
-              )
-            ),
+            path.join(testFixturesDir, "website.rbn"),
 
             "--output",
             "unknown",
@@ -132,5 +107,55 @@ describe("read", () => {
                 引数は output です。与えられた値: \\"unknown\\", 選択してください: \\"json\\", \\"human-readable\\", \\"url-only\\""
             `);
     });
+  });
+});
+
+describe("create", () => {
+  const testOutputDir = path.join(
+    path.dirname(fileURLToPath(import.meta.url)),
+    "../test-output"
+  );
+  beforeEach(async () => {
+    await rm(testOutputDir, {
+      recursive: true,
+      force: true,
+    });
+  });
+
+  it("output to stream", async () => {
+    const stream = new PassThrough();
+    await cli(
+      [
+        "create",
+        path.join(testFixturesDir, "hello.txt"),
+        "--rootDir",
+        testFixturesDir,
+      ],
+      stream
+    );
+    const buf = await receiveToBuffer(stream);
+    expect(buf).toEqual(
+      await readFile(path.join(testFixturesDir, "hello.rbn"))
+    );
+  });
+
+  it("output to file", async () => {
+    const stream = new PassThrough();
+    await mkdir(testOutputDir, { recursive: true });
+    await cli(
+      [
+        "create",
+        path.join(testFixturesDir, "hello.txt"),
+        "--rootDir",
+        testFixturesDir,
+        "--out",
+        path.join(testOutputDir, "hello.rbn"),
+      ],
+      stream
+    );
+    const buf = await readFile(path.join(testOutputDir, "hello.rbn"));
+    expect(buf).toEqual(
+      await readFile(path.join(testFixturesDir, "hello.rbn"))
+    );
   });
 });
