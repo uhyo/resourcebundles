@@ -5,7 +5,7 @@ import { read } from "./command/read.js";
 import { handleOptionMultiple } from "./util/handleOptionMultiple.js";
 
 export function cli(args: readonly string[], output: Writable): Promise<void> {
-  return new Promise<void>((resolve) => {
+  return new Promise<void>((resolve, reject) => {
     (yargs(args).command(
       "read <file>",
       "read the header of given Resource Bundle",
@@ -67,6 +67,9 @@ export function cli(args: readonly string[], output: Writable): Promise<void> {
           );
         }
       )
+      .fail((msg) => {
+        reject(msg);
+      })
       .demandCommand(1).argv;
   }).finally(() => {
     output.end();
