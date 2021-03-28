@@ -5,23 +5,30 @@ import {
   ResourceMetadata,
 } from "@resourcebundles/format";
 import chalk from "chalk";
+import { Console } from "node:console";
 import { createReadStream } from "node:fs";
 import { open } from "node:fs/promises";
+import { Writable } from "node:stream";
 import { fileSizeString } from "../util/fileSize.js";
 import { iterMap } from "../util/iter/iterMap.js";
 import { iterMax } from "../util/iter/iterMax.js";
 
 type ReadOptions = {
   file: string;
-  output: "json" | "human-readable";
+  outputType: "json" | "human-readable";
+  output: Writable;
 };
 
-export async function read({ file, output }: ReadOptions): Promise<void> {
+export async function read({
+  file,
+  output,
+  outputType,
+}: ReadOptions): Promise<void> {
   const result = await readBundle(file);
 
-  switch (output) {
+  switch (outputType) {
     case "human-readable": {
-      humanReadable(file, result);
+      humanReadable(file, output, result);
       return;
     }
     case "json": {
@@ -62,7 +69,12 @@ async function readBundle(file: string): Promise<ReadBundleResult> {
   }
 }
 
-function humanReadable(file: string, { resourceMetadata }: ReadBundleResult) {
+function humanReadable(
+  file: string,
+  output: Writable,
+  { resourceMetadata }: ReadBundleResult
+) {
+  const console = new Console(output);
   console.log(chalk.greenBright.bold(`🌐📦 ${file}`));
   console.log(chalk.blueBright(`${resourceMetadata.size} resources`));
   for (const [resourceUrl, item] of resourceMetadata) {
