@@ -14,7 +14,10 @@ describe("read", () => {
   describe("outputs", () => {
     it("human-readable", async () => {
       const stream = new PassThrough();
-      await cli(["read", path.join(testFixturesDir, "website.rbn")], stream);
+      await cli({
+        args: ["read", path.join(testFixturesDir, "website.rbn")],
+        output: stream,
+      });
       expect((await receiveToBuffer(stream)).toString("utf-8"))
         .toMatchInlineSnapshot(`
               "[92m[1m🌐📦 /Users/JP25309/personal/resourcebundles/packages/cli/test-fixtures/website.rbn[22m[39m
@@ -36,10 +39,15 @@ describe("read", () => {
     });
     it("json", async () => {
       const stream = new PassThrough();
-      await cli(
-        ["read", path.join(testFixturesDir, "website.rbn"), "--output", "json"],
-        stream
-      );
+      await cli({
+        args: [
+          "read",
+          path.join(testFixturesDir, "website.rbn"),
+          "--output",
+          "json",
+        ],
+        output: stream,
+      });
       const obj = JSON.parse((await receiveToBuffer(stream)).toString("utf-8"));
       expect(obj).toMatchInlineSnapshot(`
         Object {
@@ -69,15 +77,15 @@ describe("read", () => {
     });
     it("url-only", async () => {
       const stream = new PassThrough();
-      await cli(
-        [
+      await cli({
+        args: [
           "read",
           path.join(testFixturesDir, "website.rbn"),
           "--output",
           "url-only",
         ],
-        stream
-      );
+        output: stream,
+      });
       const obj = (await receiveToBuffer(stream)).toString("utf-8");
       expect(obj).toMatchInlineSnapshot(`
         "js.js
@@ -91,8 +99,8 @@ describe("read", () => {
     it("unknown output", async () => {
       const stream = new PassThrough();
       await expect(
-        cli(
-          [
+        cli({
+          args: [
             "read",
             path.join(testFixturesDir, "website.rbn"),
 
@@ -100,11 +108,12 @@ describe("read", () => {
             "unknown",
           ],
 
-          stream
-        )
+          output: stream,
+          locale: "en",
+        })
       ).rejects.toMatchInlineSnapshot(`
-              "不正な値です:
-                引数は output です。与えられた値: \\"unknown\\", 選択してください: \\"json\\", \\"human-readable\\", \\"url-only\\""
+              "Invalid values:
+                Argument: output, Given: \\"unknown\\", Choices: \\"json\\", \\"human-readable\\", \\"url-only\\""
             `);
     });
   });
@@ -124,15 +133,15 @@ describe("create", () => {
 
   it("output to stream", async () => {
     const stream = new PassThrough();
-    await cli(
-      [
+    await cli({
+      args: [
         "create",
         path.join(testFixturesDir, "hello.txt"),
         "--rootDir",
         testFixturesDir,
       ],
-      stream
-    );
+      output: stream,
+    });
     const buf = await receiveToBuffer(stream);
     expect(buf).toEqual(
       await readFile(path.join(testFixturesDir, "hello.rbn"))
@@ -142,8 +151,8 @@ describe("create", () => {
   it("output to file", async () => {
     const stream = new PassThrough();
     await mkdir(testOutputDir, { recursive: true });
-    await cli(
-      [
+    await cli({
+      args: [
         "create",
         path.join(testFixturesDir, "hello.txt"),
         "--rootDir",
@@ -151,11 +160,13 @@ describe("create", () => {
         "--out",
         path.join(testOutputDir, "hello.rbn"),
       ],
-      stream
-    );
+      output: stream,
+    });
     const buf = await readFile(path.join(testOutputDir, "hello.rbn"));
     expect(buf).toEqual(
       await readFile(path.join(testFixturesDir, "hello.rbn"))
     );
   });
 });
+
+describe("error for unknown command", () => {});

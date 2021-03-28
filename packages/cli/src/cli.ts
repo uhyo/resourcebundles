@@ -2,7 +2,10 @@
 
 import { cli } from "./main.js";
 
-cli(process.argv.slice(2), process.stdout).catch((err) => {
+cli({
+  args: process.argv.slice(2),
+  output: process.stdout,
+}).catch((err) => {
   console.error(err);
   process.exit(1);
 });

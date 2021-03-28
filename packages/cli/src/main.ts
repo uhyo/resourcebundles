@@ -4,7 +4,23 @@ import { create } from "./command/create.js";
 import { read } from "./command/read.js";
 import { handleOptionMultiple } from "./util/handleOptionMultiple.js";
 
-export function cli(args: readonly string[], output: Writable): Promise<void> {
+export type CLIOptions = {
+  /**
+   * Args.
+   */
+  args: readonly string[];
+  /**
+   * Output channel.
+   */
+  output: Writable;
+  /**
+   * Locale (for yargs).
+   * Defaults to OS locale.
+   */
+  locale?: string;
+};
+
+export function cli({ args, output, locale }: CLIOptions): Promise<void> {
   return new Promise<void>((resolve, reject) => {
     (yargs(args).command(
       "read <file>",
@@ -78,6 +94,7 @@ export function cli(args: readonly string[], output: Writable): Promise<void> {
       .fail((msg) => {
         reject(msg);
       })
+      .locale(locale || yargs.locale())
       .demandCommand(1).argv;
   }).finally(() => {
     output.end();
