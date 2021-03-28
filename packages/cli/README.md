@@ -22,6 +22,16 @@ Shows metadata of resource bundles (URLs of resources in given bundle, size of e
 - `json`: JSON that includes full metadata
 - `url-only`: resource URLs only, one URL per line
 
+### Extracting a Resource Bundle
+
+```sh
+rbn extract bundle.rbn --out outDir/
+```
+
+Extracts all resources in given resource bundle as files.
+
+HTTP headers associated to each resource are ignored.
+
 ### Creating a Resource Bundle
 
 ```sh
