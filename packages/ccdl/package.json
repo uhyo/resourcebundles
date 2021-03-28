@@ -1,7 +1,7 @@
 {
   "name": "@resourcebundles/ccdl",
   "version": "0.1.0",
-  "description": "CCDL-driven CBOR encoder/decorder",
+  "description": "CBOR encoder/parser combinator",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "type": "module",
