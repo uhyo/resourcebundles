@@ -17,8 +17,7 @@
     "build": "tsc --build",
     "watch": "tsc --build --watch",
     "test": "NODE_OPTIONS=--experimental-vm-modules jest",
-    "test:watch": "NODE_OPTIONS=--experimental-vm-modules jest --watch",
-    "release": "standard-version release -t @resourcebundles/cli\\@"
+    "test:watch": "NODE_OPTIONS=--experimental-vm-modules jest --watch"
   },
   "keywords": [
     "resourcebundles"
