@@ -22,7 +22,7 @@ export type CLIOptions = {
 
 export function cli({ args, output, locale }: CLIOptions): Promise<void> {
   return new Promise<void>((resolve, reject) => {
-    (yargs(args).command(
+    let y = (yargs(args).command(
       "read <file>",
       "read the header of given Resource Bundle",
       (yargs) => {
@@ -93,10 +93,12 @@ export function cli({ args, output, locale }: CLIOptions): Promise<void> {
       )
       .fail((msg) => {
         reject(msg);
-      })
-      .locale(locale || yargs.locale())
-      .demandCommand(1)
-      .strictCommands().argv;
+      });
+
+    if (locale) {
+      y = y.locale(locale);
+    }
+    y.demandCommand(1).strictCommands().argv;
   }).finally(() => {
     output.end();
   });
