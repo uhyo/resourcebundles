@@ -1,4 +1,4 @@
-import { mkdir, readFile, rm } from "node:fs/promises";
+import { access, mkdir, readFile, rm } from "node:fs/promises";
 import path from "node:path";
 import { PassThrough } from "node:stream";
 import { fileURLToPath } from "node:url";
@@ -8,6 +8,10 @@ import { receiveToBuffer } from "./util/test/receiveToBuffer";
 const testFixturesDir = path.join(
   path.dirname(fileURLToPath(import.meta.url)),
   "../test-fixtures"
+);
+const testOutputDir = path.join(
+  path.dirname(fileURLToPath(import.meta.url)),
+  "../test-output"
 );
 
 describe("read", () => {
@@ -120,10 +124,6 @@ describe("read", () => {
 });
 
 describe("create", () => {
-  const testOutputDir = path.join(
-    path.dirname(fileURLToPath(import.meta.url)),
-    "../test-output"
-  );
   beforeEach(async () => {
     await rm(testOutputDir, {
       recursive: true,
@@ -166,6 +166,32 @@ describe("create", () => {
     expect(buf).toEqual(
       await readFile(path.join(testFixturesDir, "hello.rbn"))
     );
+  });
+});
+
+describe("extract", () => {
+  beforeEach(async () => {
+    await rm(testOutputDir, {
+      recursive: true,
+      force: true,
+    });
+  });
+
+  it("extract", async () => {
+    const extractDir = path.join(testOutputDir, "extract");
+    const stream = new PassThrough();
+    await cli({
+      args: [
+        "extract",
+        path.join(testFixturesDir, "website.rbn"),
+        "--out",
+        extractDir,
+      ],
+      output: stream,
+    });
+    await access(path.join(extractDir, "index.html"));
+    await access(path.join(extractDir, "css.css"));
+    await access(path.join(extractDir, "js.js"));
   });
 });
 

@@ -2,7 +2,8 @@ import { ResourceBundleSerializer } from "@resourcebundles/format";
 import mime from "mime";
 import { createWriteStream } from "node:fs";
 import path from "node:path";
-import { Stream, Writable } from "node:stream";
+import { Writable } from "node:stream";
+import { awaitStream } from "../util/awaitStream.js";
 
 type CreateOptions = {
   files: readonly string[];
@@ -67,11 +68,4 @@ export async function create({
     awaitStream(resourceBundleStream),
     ...(output.type === "file" ? [awaitStream(outputStream)] : []),
   ]);
-}
-
-function awaitStream(stream: Stream) {
-  return new Promise((resolve, reject) => {
-    stream.once("close", resolve);
-    stream.once("error", reject);
-  });
 }
