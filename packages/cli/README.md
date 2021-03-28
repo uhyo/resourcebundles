@@ -10,13 +10,17 @@ npm install -g @resourcebundles/cli
 
 ## Usage
 
-### Inspecting Resource Bundles
+### Inspecting Resource Bundle Metadata
 
 ```sh
 rbn read bundle.rbn
 ```
 
-By default, `rbn` outputs human-readable outputs. To get a JSON output, pass `--output json`.
+Shows metadata of resource bundles (URLs of resources in given bundle, size of each resource and headers of each resource). Following output formats are supported via the `--output` option:
+
+- `human-readable` (default): human-readable outputs
+- `json`: JSON that includes full metadata
+- `url-only`: resource URLs only, one URL per line
 
 ### Creating a Resource Bundle
 
