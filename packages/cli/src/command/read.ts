@@ -15,7 +15,7 @@ import { iterMax } from "../util/iter/iterMax.js";
 
 type ReadOptions = {
   file: string;
-  outputType: "json" | "human-readable";
+  outputType: "json" | "human-readable" | "url-only";
   output: Writable;
 };
 
@@ -33,6 +33,11 @@ export async function read({
     }
     case "json": {
       json(output, result);
+      return;
+    }
+    case "url-only": {
+      urlOnly(output, result);
+      return;
     }
   }
 }
@@ -110,4 +115,10 @@ function json(output: Writable, { resourceMetadata }: ReadBundleResult) {
       )
     ) + "\n"
   );
+}
+
+function urlOnly(output: Writable, { resourceMetadata }: ReadBundleResult) {
+  for (const resourceUrl of resourceMetadata.keys()) {
+    output.write(resourceUrl + "\n");
+  }
 }

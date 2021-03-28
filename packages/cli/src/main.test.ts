@@ -81,4 +81,28 @@ Object {
 }
 `);
   });
+  it("url-only", async () => {
+    const stream = new PassThrough();
+    await cli(
+      [
+        "read",
+        fileURLToPath(
+          path.join(
+            path.dirname(import.meta.url),
+            "../test-fixtures/website.rbn"
+          )
+        ),
+        "--output",
+        "url-only",
+      ],
+      stream
+    );
+    const obj = (await receiveToBuffer(stream)).toString("utf-8");
+    expect(obj).toMatchInlineSnapshot(`
+"js.js
+css.css
+index.html
+"
+`);
+  });
 });

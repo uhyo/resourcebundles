@@ -19,7 +19,7 @@ export function cli(args: readonly string[], output: Writable): Promise<void> {
           .option("output", {
             describe: "output format",
             // default: "human-readable" as const,
-            choices: ["json", "human-readable"] as const,
+            choices: ["json", "human-readable", "url-only"] as const,
           });
       },
       (argv) => {
