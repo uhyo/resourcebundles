@@ -1,6 +1,6 @@
 {
   "name": "@resourcebundles/cli",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "CLI for inspecting and manipulating Resource Bundles",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -17,7 +17,8 @@
     "build": "tsc --build",
     "watch": "tsc --build --watch",
     "test": "NODE_OPTIONS=--experimental-vm-modules jest",
-    "test:watch": "NODE_OPTIONS=--experimental-vm-modules jest --watch"
+    "test:watch": "NODE_OPTIONS=--experimental-vm-modules jest --watch",
+    "release": "standard-version release -t @resourcebundles/cli\\@"
   },
   "keywords": [
     "resourcebundles"
@@ -40,6 +41,7 @@
     "@types/node": "^14.14.34",
     "@types/yargs": "^16.0.0",
     "jest": "^27.0.0-next.6",
+    "standard-version": "^9.1.1",
     "typescript": "^4.2.3"
   }
 }
